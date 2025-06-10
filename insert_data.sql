@@ -1,9 +1,9 @@
 -- Staff
-INSERT INTO chocolate_factory.Staff (name, role, email, phone) VALUES
+INSERT INTO cs340_jonesow.Staff (name, role, email, phone) VALUES
 ('Kush Patel', 'Manager', 'kush.patel@chocofactory.com', 5551001001),
 ('Téa Kidder', 'Worker', 'téa.kidder@chocofactory.com', 5551001002),
 ('Julia Feldhousen', 'Worker', 'julia.feldhousen@chocofactory.com', 5551001003),
-('Owen Jones', 'Supplier', 'Owen.Jones@chocofactory.com', 5551001004),
+('Owen Jones', 'Supplier', 'owen.jones@chocofactory.com', 5551001004),
 ('Eve Patel', 'Worker', 'eve.patel@chocofactory.com', 5551001005),
 ('Frank Wu', 'Manager', 'frank.wu@chocofactory.com', 5551001006),
 ('Grace Lin', 'Worker', 'grace.lin@chocofactory.com', 5551001007),
@@ -12,7 +12,7 @@ INSERT INTO chocolate_factory.Staff (name, role, email, phone) VALUES
 ('Jack Brown', 'Worker', 'jack.brown@chocofactory.com', 5551001010);
 
 -- Distributor
-INSERT INTO chocolate_factory.Distributor (name, email, phone, address) VALUES
+INSERT INTO cs340_jonesow.Distributor (name, email, phone, address) VALUES
 ('Sweet Treats LLC', 'orders@sweettreats.com', 5552001001, '123 Candy Lane'),
 ('ChocoWholesale', 'contact@chocowholesale.com', 5552001002, '456 Cocoa Blvd'),
 ('Dessert Depot', 'sales@dessertdepot.com', 5552001003, '789 Sugar Ave'),
@@ -25,7 +25,7 @@ INSERT INTO chocolate_factory.Distributor (name, email, phone, address) VALUES
 ('Bulk Choco', 'bulk@choco.com', 5552001010, '753 Ganache Ct');
 
 -- Ingredient
-INSERT INTO chocolate_factory.Ingredient (name) VALUES
+INSERT INTO cs340_jonesow.Ingredient (name) VALUES
 ('Cocoa Beans'),
 ('Sugar'),
 ('Milk Powder'),
@@ -38,7 +38,7 @@ INSERT INTO chocolate_factory.Ingredient (name) VALUES
 ('Peanut Butter');
 
 -- Product
-INSERT INTO chocolate_factory.Product (type, flavor, weight, inventory, createdBy) VALUES
+INSERT INTO cs340_jonesow.Product (type, flavor, weight, inventory, createdBy) VALUES
 ('Bar', 'Milk Chocolate', 100, 0, 1),
 ('Bar', 'Dark Chocolate', 100, 0, 2),
 ('Truffle', 'Hazelnut', 50, 0, 3),
@@ -51,7 +51,7 @@ INSERT INTO chocolate_factory.Product (type, flavor, weight, inventory, createdB
 ('Bar', 'White Chocolate', 100, 0, 10);
 
 -- ProductIngredient
-INSERT INTO chocolate_factory.ProductIngredient (productId, ingredientId) VALUES
+INSERT INTO cs340_jonesow.ProductIngredient (productId, ingredientId) VALUES
 (1, 1), (1, 2), (1, 3), (1, 4),         -- Milk Chocolate Bar
 (2, 1), (2, 2), (2, 4),                 -- Dark Chocolate Bar
 (3, 1), (3, 2), (3, 3), (3, 6),         -- Hazelnut Truffle
@@ -64,7 +64,7 @@ INSERT INTO chocolate_factory.ProductIngredient (productId, ingredientId) VALUES
 (10, 1), (10, 2), (10, 3), (10, 4);     -- White Chocolate Bar
 
 -- Batch
-INSERT INTO chocolate_factory.Batch (quantity, batchDate, productId) VALUES
+INSERT INTO cs340_jonesow.Batch (quantity, batchDate, productId) VALUES
 (500, '2024-06-01 08:00:00', 1),
 (300, '2024-06-02 09:00:00', 2),
 (200, '2024-06-03 10:00:00', 3),
@@ -77,7 +77,7 @@ INSERT INTO chocolate_factory.Batch (quantity, batchDate, productId) VALUES
 (600, '2024-06-10 17:00:00', 10);
 
 -- ProductOrder
-INSERT INTO chocolate_factory.ProductOrder (orderDate, quantity, furfilledDate, distributorId, productId) VALUES
+INSERT INTO cs340_jonesow.ProductOrder (orderDate, quantity, fulfilledDate, distributorId, productId) VALUES
 ('2024-06-11 10:00:00', 100, '2024-06-12', 1, 1),
 ('2024-06-12 11:00:00', 50, NULL, 2, 2),
 ('2024-06-13 12:00:00', 75, '2024-06-14', 3, 3),
