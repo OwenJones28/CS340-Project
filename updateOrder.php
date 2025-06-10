@@ -128,6 +128,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 exit();
             } else {
                 echo "<center><h2>Error when updating order</center></h2>";
+                echo "<center><p style='color: red;'>" . mysqli_stmt_error($stmt) . "</p></center>";
             }
             mysqli_stmt_close($stmt);
         }

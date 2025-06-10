@@ -5,6 +5,7 @@ DROP TRIGGER IF EXISTS cs340_jonesow.AddToInventory;
 DROP TRIGGER IF EXISTS cs340_jonesow.OrderPlacedAsFulfilled;
 DROP TRIGGER IF EXISTS cs340_jonesow.OrderFulfilled;
 DROP FUNCTION IF EXISTS cs340_jonesow.GetMostPopular;
+DROP FUNCTION IF EXISTS cs340_jonesow.GetMostPopularProductByDistributor;
 DROP TABLE IF EXISTS cs340_jonesow.ProductIngredient;
 DROP TABLE IF EXISTS cs340_jonesow.Batch;
 DROP TABLE IF EXISTS cs340_jonesow.ProductOrder;
@@ -106,16 +107,28 @@ END$$
 CREATE TRIGGER cs340_jonesow.OrderPlacedAsFulfilled
 AFTER INSERT ON cs340_jonesow.ProductOrder FOR EACH ROW
 BEGIN
+    DECLARE currentInv INT;
 	IF NEW.fulfilledDate IS NOT NULL THEN
-		UPDATE cs340_jonesow.Product SET inventory = inventory - NEW.quantity WHERE productId = NEW.productId;
+        SELECT inventory INTO currentInv FROM cs340_jonesow.Product WHERE productId = NEW.productId;
+        IF currentInv < NEW.quantity THEN
+            SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Insufficient inventory to fulfill the order';
+        ELSE
+		    UPDATE cs340_jonesow.Product SET inventory = inventory - NEW.quantity WHERE productId = NEW.productId;
+        END IF;
     END IF;
 END$$
 
 CREATE TRIGGER cs340_jonesow.OrderFulfilled
 AFTER UPDATE ON cs340_jonesow.ProductOrder FOR EACH ROW
 BEGIN
+    DECLARE currentInv INT;
 	IF OLD.fulfilledDate IS NULL AND NEW.fulfilledDate IS NOT NULL THEN
-		UPDATE cs340_jonesow.Product SET inventory = inventory - NEW.quantity WHERE productId = NEW.productId;
+        SELECT inventory INTO currentInv FROM cs340_jonesow.Product WHERE productId = NEW.productId;
+        IF currentInv < NEW.quantity THEN
+            SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Insufficient inventory to fulfill the order';
+        ELSE
+		    UPDATE cs340_jonesow.Product SET inventory = inventory - NEW.quantity WHERE productId = NEW.productId;
+        END IF;
     END IF;
 END$$
 

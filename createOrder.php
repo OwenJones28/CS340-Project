@@ -92,7 +92,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 header("location: index.php");
                 exit();
             } else {
-                echo "<center><h4>Error while creating new order</h4></center>";
+                echo "<center><h2>Error while creating new order</h2></center>";
+                echo "<center><p style='color: red;'>" . mysqli_stmt_error($stmt) . "</p></center>";
             }
         }
         mysqli_stmt_close($stmt);
@@ -120,7 +121,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             <div class="row">
                 <div class="col-md-12">
                     <div class="page-header">
-                        <h2>Create ORder</h2>
+                        <h2>Create Order</h2>
                     </div>
                     <p>Please fill this form and submit to add an Order record to the database.</p>
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
