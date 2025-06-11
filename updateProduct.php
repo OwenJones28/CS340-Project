@@ -3,6 +3,17 @@
 	session_start();	
 // Include config file
 	require_once "config.php";
+
+$staffOptions = [];
+$staff_sql = "SELECT staffId, name FROM Staff"; // Assuming there's a 'name' column; adjust if needed
+if ($staff_result = mysqli_query($link, $staff_sql)) {
+    while ($row = mysqli_fetch_assoc($staff_result)) {
+        $staffOptions[] = $row;
+    }
+    mysqli_free_result($staff_result);
+} else {
+    echo "<center><h4>Error fetching staff records.</h4></center>";
+}
  
 // Define variables and initialize with empty values
 $type = $flavor = $weight = $createdBy = "";
@@ -194,9 +205,16 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                         </div>
 						<div class="form-group <?php echo (!empty($createdBy_err)) ? 'has-error' : ''; ?>">
                             <label>Created By</label>
-                            <input type="text" name="createdBy" class="form-control" value="<?php echo $createdBy; ?>">
+                            <select name="createdBy" class="form-control">
+                                <option value="">-- Select Staff --</option>
+                                <?php foreach ($staffOptions as $staff): ?>
+                                    <option value="<?php echo $staff['staffId']; ?>" <?php echo ($createdBy == $staff['staffId']) ? 'selected' : ''; ?>>
+                                        <?php echo htmlspecialchars($staff['staffId'] . ' - ' . $staff['name']); ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
                             <span class="help-block"><?php echo $createdBy_err;?></span>
-                        </div>					
+                        </div>				
                         <input type="hidden" name="productId" value="<?php echo $productId; ?>"/>
                         <input type="submit" class="btn btn-primary" value="Submit">
                         <a href="index.php" class="btn btn-default">Cancel</a>
